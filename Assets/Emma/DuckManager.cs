@@ -54,7 +54,9 @@ public class DuckManager : MonoBehaviour
         {
             
             Collider2D nutCol = nuts[i].GetComponent<Collider2D>();
-            if (nutCol!=null && nutCol.IsTouching(duckCol))
+            Debug.Log(nutCol);
+            Debug.Log(duckCol);
+            if (nutCol.IsTouching(duckCol))
             {
                 Debug.Log(3);
                 mineable = true;

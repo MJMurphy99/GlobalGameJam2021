@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 //https://youtu.be/AiZ4z4qKy44 used to baseline moevment system
 public class GridMovement : MonoBehaviour
@@ -25,8 +26,11 @@ public class GridMovement : MonoBehaviour
 
     public bool playerCanMove;
 
+    public Tilemap tm;
+
     private void Start()
     {
+        transform.position = tm.CellToWorld(tm.WorldToCell(transform.position));
         playerHealth = 3;
         Debug.Log(playerHealth);
         playerAttackCooldown = 0.5f;
@@ -46,7 +50,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(false);
             playerMoveable(boundryCheckerUp);
-            StartCoroutine(MovePlayer(Vector3.up));
+            StartCoroutine(MovePlayer(Vector3Int.up));
             keyPressedLast = "up";
 
         }
@@ -57,7 +61,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerDown.SetActive(true);
             boundryCheckerHor.SetActive(false);
             playerMoveable(boundryCheckerDown);
-            StartCoroutine(MovePlayer(Vector3.down));
+            StartCoroutine(MovePlayer(Vector3Int.down));
             keyPressedLast = "down";
 
         }
@@ -68,7 +72,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(true);
             playerMoveable(boundryCheckerHor);
-            StartCoroutine(MovePlayer(Vector3.left));
+            StartCoroutine(MovePlayer(Vector3Int.left));
             keyPressedLast = "left";
             transform.localScale = new Vector3(-1, 1, 1); //flip the sprite
 
@@ -81,7 +85,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(true);
             playerMoveable(boundryCheckerHor);
-            StartCoroutine(MovePlayer(Vector3.right));
+            StartCoroutine(MovePlayer(Vector3Int.right));
             keyPressedLast = "right";
             transform.localScale = new Vector3(1, 1, 1); //flip the sprite
         }
@@ -102,7 +106,7 @@ public class GridMovement : MonoBehaviour
 
     }
 
-    private IEnumerator MovePlayer(Vector3 direction)
+    private IEnumerator MovePlayer(Vector3Int direction)
     {
 
         if (playerCanMove)
@@ -112,7 +116,7 @@ public class GridMovement : MonoBehaviour
             float elapsedTime = 0;
 
             originPos = transform.position;
-            targetPos = originPos + direction;
+            targetPos = tm.CellToWorld(tm.WorldToCell(originPos) + direction);
 
             while (elapsedTime < timeToMove)
             {
@@ -194,6 +198,15 @@ public class GridMovement : MonoBehaviour
 
     void playerMoveable(GameObject wall)
     {
-        playerCanMove = !GetComponent<Collider2D>().IsTouching(wall.GetComponent<Collider2D>());
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("Boundry");
+        playerCanMove = true;
+        for(int i=0; i<walls.Length; i++)
+        {
+            if(wall.GetComponent<Collider2D>().IsTouching(walls[i].GetComponent<Collider2D>()))
+            {
+                playerCanMove = false;
+                break;
+            }
+        }
     }
 }

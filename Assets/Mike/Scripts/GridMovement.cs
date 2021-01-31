@@ -45,6 +45,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerUp.SetActive(true);
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(false);
+            playerMoveable(boundryCheckerUp);
             StartCoroutine(MovePlayer(Vector3.up));
             keyPressedLast = "up";
 
@@ -55,6 +56,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerUp.SetActive(false);
             boundryCheckerDown.SetActive(true);
             boundryCheckerHor.SetActive(false);
+            playerMoveable(boundryCheckerDown);
             StartCoroutine(MovePlayer(Vector3.down));
             keyPressedLast = "down";
 
@@ -65,6 +67,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerUp.SetActive(false);
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(true);
+            playerMoveable(boundryCheckerHor);
             StartCoroutine(MovePlayer(Vector3.left));
             keyPressedLast = "left";
             transform.localScale = new Vector3(-1, 1, 1); //flip the sprite
@@ -77,6 +80,7 @@ public class GridMovement : MonoBehaviour
             boundryCheckerUp.SetActive(false);
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(true);
+            playerMoveable(boundryCheckerHor);
             StartCoroutine(MovePlayer(Vector3.right));
             keyPressedLast = "right";
             transform.localScale = new Vector3(1, 1, 1); //flip the sprite
@@ -175,16 +179,21 @@ public class GridMovement : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Boundry")
-        {
-            playerCanMove = false;
-        }
-    }
+    //public void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if(collision.tag == "Boundry")
+    //    {
+    //        playerCanMove = false;
+    //    }
+    //}
 
-    public void OnTriggerExit2D(Collider2D collision)
+    //public void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    playerCanMove = true;
+    //}
+
+    void playerMoveable(GameObject wall)
     {
-        playerCanMove = true;
+        playerCanMove = !GetComponent<Collider2D>().IsTouching(wall.GetComponent<Collider2D>());
     }
 }

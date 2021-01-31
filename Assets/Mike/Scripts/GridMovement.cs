@@ -100,6 +100,7 @@ public class GridMovement : MonoBehaviour
 
     private IEnumerator MovePlayer(Vector3 direction)
     {
+
         if (playerCanMove)
         {
             isMoving = true;

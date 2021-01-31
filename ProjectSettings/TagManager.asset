@@ -6,7 +6,10 @@ TagManager:
   tags:
   - duck
   - Path
-  - EntryPath
+  - Flag
+  - Tree
+  - Enemy
+  - Mineable
   layers:
   - Default
   - TransparentFX

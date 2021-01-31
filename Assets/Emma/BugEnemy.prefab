@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3536732200028927029}
   m_Layer: 0
   m_Name: BugEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4815273175289232885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.44, y: -0.46, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: bb973a089ffcd43b48e999634a95da2e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,13 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b9f8484c0d9448184b74abc4f6c47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xMin: -11
-  xMax: 9
-  yMin: -6
-  yMax: 5
   tilemapTag: Path
-  duckTag: duck
-  goalTilemap: {x: 0, y: 0, z: 0}
+  goalTag: duck
+  goalTilemapPos: {x: 0, y: 0, z: 0}
+  entry: 0
+  ignoreTopRows: 0
 --- !u!95 &4815273175289232887
 Animator:
   serializedVersion: 3
@@ -148,4 +146,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ringPrefab: {fileID: 0}
-  a: {fileID: 0}

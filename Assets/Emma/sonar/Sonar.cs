@@ -5,16 +5,23 @@ using UnityEngine;
 public class Sonar : MonoBehaviour
 {
     public GameObject ringPrefab;
-    public GameObject a;
     // Start is called before the first frame update
     void Start()
     {
         SonarController.Blip += SpawnRing;
     }
 
+    private void Update()
+    {
+        if(GetComponent<SpriteRenderer>().enabled)
+        {
+            SonarController.Blip -= SpawnRing;
+        }
+    }
+
     public void SpawnRing()
     {
-        a = Instantiate(ringPrefab);
+        GameObject a = Instantiate(ringPrefab);
         a.transform.position = transform.position;
         a.GetComponent<Animator>().SetTrigger("Go");
     }

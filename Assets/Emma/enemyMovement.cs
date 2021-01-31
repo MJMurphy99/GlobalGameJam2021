@@ -30,6 +30,7 @@ public class enemyMovement : MonoBehaviour
     public bool ignoreTopRows;
 
     private Animator anim;
+    private SpriteRenderer sp;
 
     private Vector2Int[] turns =
     {
@@ -43,6 +44,7 @@ public class enemyMovement : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        sp = GetComponent<SpriteRenderer>();
 
         tm = GameObject.FindGameObjectWithTag(tilemapTag).GetComponent<Tilemap>();
         pathRecord = new char[1 + xMax - xMin, 1 + yMax - yMin];//the one plus is to account for tiles at 0,0
@@ -78,24 +80,28 @@ public class enemyMovement : MonoBehaviour
                                         {
                                             //anim
                                             anim.SetInteger("Direction", 1);
-                                            transform.localScale = new Vector3(1, 1, 1); //flip the sprite
+                                            sp.flipX = false;
+                                            //transform.localScale = new Vector3(1, 1, 1); //flip the sprite
                                         }
                                         if (direction == Vector3Int.down)
                                         {
                                             //anim
-                                            transform.localScale = new Vector3(1, 1, 1); //flip the sprite
+                                            sp.flipX = false;
+                                            //transform.localScale = new Vector3(1, 1, 1); //flip the sprite
                                             anim.SetInteger("Direction", 0);
                                         }
                                         if (direction == Vector3Int.left)
                                         {
                                             //anim
+                                            sp.flipX = false;
                                             transform.localScale = new Vector3(-1, 1, 1); //flip the sprite
                                             anim.SetInteger("Direction", 2);
                                         }
                                         if (direction == Vector3Int.right)
                                         {
                                             //anim
-                                            transform.localScale = new Vector3(1, 1, 1); //flip the sprite
+                                            sp.flipX = true;
+                                            //flip the sprite
                                             anim.SetInteger("Direction", 2);
                                         }
 

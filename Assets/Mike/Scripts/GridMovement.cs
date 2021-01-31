@@ -146,7 +146,7 @@ public class GridMovement : MonoBehaviour
 
             transform.position = targetPos;
 
-            Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+            Vector3Int pos = tm.WorldToCell(transform.position);
 
             if (tm.GetTile(pos) == null)
             {

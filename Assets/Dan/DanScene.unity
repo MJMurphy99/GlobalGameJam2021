@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &23797240
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -524,14 +524,15 @@ MonoBehaviour:
   width: 16
   height: 16
   relics:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  enemyCave: {fileID: 0}
+  - {fileID: 6309980057103540673, guid: 43335103a1b897549a4fc7aac965a8ca, type: 3}
+  - {fileID: 6309980057103540673, guid: 43335103a1b897549a4fc7aac965a8ca, type: 3}
+  - {fileID: 6309980057103540673, guid: 43335103a1b897549a4fc7aac965a8ca, type: 3}
+  enemyCave: {fileID: 7784714585663545728, guid: 6a661ae3927c51a4282ccd41557377cc,
+    type: 3}
   container: {fileID: 8355404668233618919, guid: 7bbb533cc6fe9304ab1cf7e3893c5a28,
     type: 3}
   minCaves: 8
-  maxCaves: 40
+  proximityExclusionRadius: 2
 --- !u!1 &1463406065
 GameObject:
   m_ObjectHideFlags: 0

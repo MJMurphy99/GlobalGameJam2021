@@ -9,7 +9,7 @@ public class Test : MonoBehaviour
     private bool moving;
     private Vector2 dir = Vector2.zero;
     private float speed = .25f;
-    private int mDurr = 5, cDurr = 5; 
+    private int mDurr = 100, cDurr = 100; 
 
     public TileBase t;
 

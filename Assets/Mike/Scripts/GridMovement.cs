@@ -82,7 +82,7 @@ public class GridMovement : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1); //flip the sprite
         }
 
-        if(playerAttackCooldown <= 0)
+        if (playerAttackCooldown <= 0)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -117,6 +117,8 @@ public class GridMovement : MonoBehaviour
             }
 
             transform.position = targetPos;
+
+            Debug.Log(transform.position);
 
             isMoving = false;
 

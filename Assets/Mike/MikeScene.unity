@@ -444,6 +444,12 @@ PrefabInstance:
       propertyPath: boundryCheckerDown
       value: 
       objectReference: {fileID: 580789012}
+    - target: {fileID: 5175784189315160565, guid: 0cf9c09314a435d488e8c6ef9f75d68a,
+        type: 3}
+      propertyPath: flagPrefab
+      value: 
+      objectReference: {fileID: 6458137425318394413, guid: 2047eda5d6784a6409d679366e7e1957,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cf9c09314a435d488e8c6ef9f75d68a, type: 3}
 --- !u!1 &519420028

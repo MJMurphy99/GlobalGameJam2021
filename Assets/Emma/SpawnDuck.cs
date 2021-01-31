@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpawnDuck : MonoBehaviour
 {
-    private static bool canSpawnDuck = true;
-    public GameObject duck;
+    public static bool canSpawnDuck = true;
+    public GameObject duck, flag;
     private static float duckCoolDown = 10f;
 
     // Start is called before the first frame update
@@ -19,6 +19,7 @@ public class SpawnDuck : MonoBehaviour
     {
         if (canSpawnDuck && Input.GetKeyDown(KeyCode.Q))
         {
+            Instantiate(flag, transform.position, transform.rotation);
             canSpawnDuck = false;
             Instantiate(duck);
         }

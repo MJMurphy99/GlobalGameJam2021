@@ -9,6 +9,7 @@ public class Test : MonoBehaviour
     private bool moving;
     private Vector2 dir = Vector2.zero;
     private float speed = .25f;
+    private int mDurr = 5, cDurr = 5; 
 
     public TileBase t;
 
@@ -48,28 +49,30 @@ public class Test : MonoBehaviour
         Vector2 origin = transform.position;
         Vector2 target = origin + dir;
 
-        while(timePassed < speed)
+        Vector3Int pos = new Vector3Int((int)target.x, (int)target.y, 0);
+
+        //Tunneling
+        if (cDurr > 0 || (cDurr == 0 && tm.GetTile(pos) != null))
         {
-            transform.position = Vector2.Lerp(origin, target, timePassed / speed);
-            timePassed += Time.deltaTime;
-            yield return null;
+            while (timePassed < speed)
+            {
+                transform.position = Vector2.Lerp(origin, target, timePassed / speed);
+                timePassed += Time.deltaTime;
+                yield return null;
+            }
+            transform.position = target;
+
+            if (tm.GetTile(pos) == null)
+            {
+                tm.SetTile(pos, t);
+                cDurr--;
+            }
+        }
+        else
+        {
+            //Not Tunneling
         }
 
-        transform.position = target;
-
-        Vector3Int pos = new Vector3Int((int)target.x, (int)target.y, 0);
-        tm.SetTile(pos, t);
-
         moving = false;
-    }
-
-    private void DigTunnel()
-    {
-
-    }
-
-    private void Break()
-    {
-
     }
 }

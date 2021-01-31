@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 2605488225210691454}
   StringsBanks:
   - {fileID: 5815695795344637349}
-  stringsBankWriteTime: 637476424711410579
+  stringsBankWriteTime: 637475507267840786
   cacheVersion: 6
 --- !u!114 &2605488225210691454
 MonoBehaviour:
@@ -39,7 +39,7 @@ MonoBehaviour:
   Path: Casey's Audio Corner/NotDigDug/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637476424711400596
+  lastModified: 637475507267830823
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -58,7 +58,7 @@ MonoBehaviour:
   Path: Casey's Audio Corner/NotDigDug/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637476424711410579
+  lastModified: 637475507267840786
   LoadResult: 0
   FileSizes:
   - Name: Desktop

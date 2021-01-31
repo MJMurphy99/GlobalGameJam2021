@@ -4,56 +4,156 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public float width, height;
+    public int width, height;
     public GameObject[] relics;
     public GameObject enemyCave;
     public GameObject container;
+    public int minCaves;
+    public int proximityExclusionRadius;
 
-    public int minCaves, maxCaves;
+    private GameObject[] containers;
+    private List<Vector2> cells;
+    private int placedObj = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        BuildLevel();
+        CallNewLevel();
+    }
+
+    private void AvailableCells()
+    {
+        cells = new List<Vector2>();
+
+        for(int i = 0; i < height; i++)
+        {
+            for(int j = 0; j < width; j++)
+            {
+                Vector2 point = new Vector2(i - height / 2, j - height / 2);
+
+                if(point != Vector2.zero)
+                    cells.Add(point);
+            }
+        }
     }
 
     private void BuildLevel()
     {
-        PlaceRelics();
+        AvailableCells();
         PlaceEnemies();
+        PlaceRelics();
+    }
+
+    private void PlaceEnemies()
+    {
+        int n = (int)Mathf.Pow(width / proximityExclusionRadius, 2);
+        int maxCaves = (int)(n - (n * .2f));
+
+        int numCaves = Random.Range(minCaves, maxCaves + 1);
+
+        containers = new GameObject[numCaves + 3];
+
+        for(int i = 0; i < numCaves; i++)
+        {
+            int maxItt = 100;
+            bool creatable = false;
+
+            int cell;
+
+            while (!creatable && maxItt > 0)
+            {
+                bool failedCheck = false;
+                cell = Random.Range(0, cells.Count - 1);
+                Vector2 point = cells[cell];
+
+                for (int j = 0; j < i; j++)
+                {
+                    if (j < placedObj)
+                    {
+                        if (Mathf.Abs(point.x - containers[j].transform.position.x) <= proximityExclusionRadius)
+                        {
+                            failedCheck = true;
+                            break;
+                        }
+                    }
+                    else break;
+                }
+                maxItt--;
+
+                creatable = !failedCheck;
+
+                if (creatable)
+                {
+                    cells.RemoveAt(cell);
+
+                    containers[placedObj] = Instantiate(container, point, Quaternion.identity);
+                    TileData td = containers[placedObj].GetComponent<TileData>();
+                    td.hiddenObj = enemyCave;
+                    td.type = "Enemy Tunnel";
+                    placedObj++;
+                }
+            }
+        }
     }
 
     private void PlaceRelics()
     {
         for (int i = 0; i < 3; i++)
         {
-            Vector2 point;
+            bool creatable = false;
+            int cell;
+            int maxItt = 100;
 
-            int x = (int)Random.Range(-width / 2, width / 2);
-            int y = (int)Random.Range(-height / 2, height / 2);
+            while(!creatable && maxItt > 0)
+            {
+                bool failCheck = false;
+                cell = Random.Range(0, cells.Count - 1);
+                Vector2 point = cells[cell];
 
-            point = new Vector2(x, y);
+                for (int j = 0; j < placedObj; j++)
+                {
+                    bool isClose = Mathf.Abs(point.x - containers[j].transform.position.x) <= 4;
+                    bool isRelic = containers[j].GetComponent<TileData>().type.CompareTo("Relic") == 0;
+                    
+                    if (isClose && isRelic && maxItt > 1)
+                    {
+                        failCheck = true;
+                        break;
+                    }
+                }
+                maxItt--;
 
-            GameObject instance = Instantiate(container, point, Quaternion.identity);
-            instance.GetComponent<TileData>().hiddenObj = relics[i];
+                creatable = !failCheck;
+
+                if(creatable)
+                {
+                    cells.RemoveAt(cell);
+
+                    containers[placedObj] = Instantiate(container, point, Quaternion.identity);
+                    TileData td = containers[placedObj].GetComponent<TileData>();
+                    td.hiddenObj = relics[i];
+                    td.type = "Relic";
+
+                    placedObj++;
+                }
+            }
         }
     }
 
-    private void PlaceEnemies()
+    private void ClearLevel()
     {
-        int numCaves = Random.Range(minCaves, maxCaves + 1);
-
-        for(int i = 0; i < numCaves; i++)
+        if(containers != null)
         {
-            Vector2 point;
-
-            int x = (int)Random.Range(0, width);
-            int y = (int)Random.Range(0, height);
-
-            point = new Vector2(x, y);
-
-            GameObject instance = Instantiate(container, point, Quaternion.identity);
-            instance.GetComponent<TileData>().hiddenObj = enemyCave;
+            for (int i = 0; i < containers.Length; i++)
+            {
+                Destroy(containers[i]);
+            }
+            placedObj = 0;
         }
+    }
+
+    public void CallNewLevel()
+    {
+        ClearLevel();
+        BuildLevel();
     }
 }

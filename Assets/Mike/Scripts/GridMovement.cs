@@ -27,6 +27,10 @@ public class GridMovement : MonoBehaviour
     public bool playerCanMove;
 
     public Tilemap tm;
+    public TileBase t;
+
+    public int mDurr;
+    private int cDurr;
 
     private Animator anim;
 
@@ -40,6 +44,7 @@ public class GridMovement : MonoBehaviour
         playerCanMove = true;
 
         anim = GetComponent<Animator>();
+        cDurr = mDurr;
     }
 
     // Update is called once per frame
@@ -140,6 +145,14 @@ public class GridMovement : MonoBehaviour
             }
 
             transform.position = targetPos;
+
+            Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+
+            if (tm.GetTile(pos) == null)
+            {
+                tm.SetTile(pos, t);
+                cDurr--;
+            }
 
             Debug.Log(transform.position);
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{4e9a7838-c17d-422c-848f-2b7daf7273a7}">
+		<property name="assetPath">
+			<value>SFX/GAME OVER.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>12.63156462585034</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e663226d-b4e3-416b-9b01-981d4e7e595b}</destination>
+		</relationship>
+	</object>
+</objects>

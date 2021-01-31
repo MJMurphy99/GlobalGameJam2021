@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{58be707f-ca30-45e4-a53e-a84bf785a30a}">
+		<property name="name">
+			<value>Digging</value>
+		</property>
+		<relationship name="folder">
+			<destination>{f0c6335f-4140-45d8-b43a-81bb0a665121}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d0f890b1-eed4-4537-b79e-2c66ea29e21d}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d0f890b1-eed4-4537-b79e-2c66ea29e21d}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

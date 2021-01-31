@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{ee336879-8bf5-47b3-a80d-fc8f970d43bf}">
+		<property name="assetPath">
+			<value>SFX/HIT ATTACK 1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e663226d-b4e3-416b-9b01-981d4e7e595b}</destination>
+		</relationship>
+	</object>
+</objects>

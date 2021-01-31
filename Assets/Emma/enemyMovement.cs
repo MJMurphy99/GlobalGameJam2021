@@ -29,6 +29,8 @@ public class enemyMovement : MonoBehaviour
 
     public bool ignoreTopRows;
 
+    private Animator anim;
+
     private Vector2Int[] turns =
     {
             Vector2Int.right,
@@ -40,6 +42,8 @@ public class enemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
+
         tm = GameObject.FindGameObjectWithTag(tilemapTag).GetComponent<Tilemap>();
         pathRecord = new char[1 + xMax - xMin, 1 + yMax - yMin];//the one plus is to account for tiles at 0,0
 
@@ -70,6 +74,31 @@ public class enemyMovement : MonoBehaviour
                                     if (pathRecord[adj[i].x, adj[i].y] == 'P')
                                     {
                                         direction = (Vector3Int)(pathPoint - adj[i]);
+                                        if(direction == Vector3Int.up)
+                                        {
+                                            //anim
+                                            anim.SetInteger("Direction", 1);
+                                            transform.localScale = new Vector3(1, 1, 1); //flip the sprite
+                                        }
+                                        if (direction == Vector3Int.down)
+                                        {
+                                            //anim
+                                            transform.localScale = new Vector3(1, 1, 1); //flip the sprite
+                                            anim.SetInteger("Direction", 0);
+                                        }
+                                        if (direction == Vector3Int.left)
+                                        {
+                                            //anim
+                                            transform.localScale = new Vector3(-1, 1, 1); //flip the sprite
+                                            anim.SetInteger("Direction", 2);
+                                        }
+                                        if (direction == Vector3Int.right)
+                                        {
+                                            //anim
+                                            transform.localScale = new Vector3(1, 1, 1); //flip the sprite
+                                            anim.SetInteger("Direction", 2);
+                                        }
+
                                         //this direction variable is always either Up(0,1,0) Down(0,-1,0) Left(-1,0,0) or Right(1,0,0)
                                         pathPoint = adj[i];
                                         break;
@@ -98,8 +127,7 @@ public class enemyMovement : MonoBehaviour
                 }
             }
             
-        }
-        
+        }   
     }
 
     private IEnumerator moveEnemy(Vector3Int direction)

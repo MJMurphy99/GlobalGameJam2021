@@ -28,6 +28,8 @@ public class GridMovement : MonoBehaviour
 
     public Tilemap tm;
 
+    private Animator anim;
+
     private void Start()
     {
         transform.position = tm.CellToWorld(tm.WorldToCell(transform.position));
@@ -36,6 +38,8 @@ public class GridMovement : MonoBehaviour
         playerAttackCooldown = 0.5f;
         keyPressedLast = "right";
         playerCanMove = true;
+
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -46,6 +50,8 @@ public class GridMovement : MonoBehaviour
         if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isMoving)
         {
             //Up
+            anim.SetInteger("Direction", 1);
+
             boundryCheckerUp.SetActive(true);
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(false);
@@ -54,9 +60,11 @@ public class GridMovement : MonoBehaviour
             keyPressedLast = "up";
 
         }
-        if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !isMoving)
+        else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !isMoving)
         {
             //Down
+            anim.SetInteger("Direction", 0);
+
             boundryCheckerUp.SetActive(false);
             boundryCheckerDown.SetActive(true);
             boundryCheckerHor.SetActive(false);
@@ -65,9 +73,11 @@ public class GridMovement : MonoBehaviour
             keyPressedLast = "down";
 
         }
-        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isMoving)
+        else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isMoving)
         {
             //Left
+            anim.SetInteger("Direction", 2);
+
             boundryCheckerUp.SetActive(false);
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(true);
@@ -78,9 +88,11 @@ public class GridMovement : MonoBehaviour
 
 
         }
-        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isMoving)
+        else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isMoving)
         {
             //Right
+            anim.SetInteger("Direction", 2);
+
             boundryCheckerUp.SetActive(false);
             boundryCheckerDown.SetActive(false);
             boundryCheckerHor.SetActive(true);
@@ -94,6 +106,8 @@ public class GridMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                anim.SetTrigger("Throw");
+
                 Shoot();
             }
         }
@@ -167,11 +181,10 @@ public class GridMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            //when the player collides with the enemy, lose one health and get set to a certain position in the world space
-            transform.position = new Vector3(0, 0, 0);
+            //anim
             Destroy(collision.gameObject);
-            playerHealth--;
-            Debug.Log(playerHealth);
+            StartCoroutine(PlayerDeath());
+            //play sound
         }
 
         //baseline of how score can work, when you collide with it add to the score
@@ -208,5 +221,14 @@ public class GridMovement : MonoBehaviour
                 break;
             }
         }
+    }
+
+    IEnumerator PlayerDeath()
+    {
+        yield return new WaitForSeconds(2f);
+        //when the player collides with the enemy, lose one health and get set to a certain position in the world space
+        transform.position = new Vector3(6.75f, 3.5f, 0);
+        playerHealth--;
+        Debug.Log(playerHealth);
     }
 }

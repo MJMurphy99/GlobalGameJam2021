@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3639616892380622438}
   - component: {fileID: 229137161879016321}
   - component: {fileID: -1064216015853853059}
+  - component: {fileID: 2635354649460018283}
   m_Layer: 0
   m_Name: Duck
   m_TagString: duck
@@ -136,3 +137,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2635354649460018283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358670142369674767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9646a8d06f68a47c193267f73864e9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -19,6 +19,13 @@ public class DuckManager : MonoBehaviour
 
     private GameObject mineableObject;
 
+    private Animator anim;
+
+    public void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     public void PackageSecured()
     {
         StartCoroutine(SpawnDuck.CoolDown());
@@ -107,8 +114,8 @@ public class DuckManager : MonoBehaviour
     public void Explode()
     {
         PackageSecured();
-        Debug.Log("Boom");
-        Destroy(gameObject);
+
+        anim.SetTrigger("Death");
     }
 
 }

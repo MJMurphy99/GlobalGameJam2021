@@ -148,7 +148,7 @@ public class GridMovement : MonoBehaviour
 
             Vector3Int pos = tm.WorldToCell(transform.position);
 
-            if (tm.GetTile(pos) == null)
+            if (tm.GetTile(pos) == null && transform.position.y < 3)
             {
                 tm.SetTile(pos, t);
                 cDurr--;

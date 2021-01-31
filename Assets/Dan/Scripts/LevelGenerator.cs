@@ -8,6 +8,7 @@ public class LevelGenerator : MonoBehaviour
     public GameObject[] relics;
     public GameObject enemyCave;
     public GameObject container;
+    public Collider2D player;
     public int minCaves;
     public int proximityExclusionRadius;
 
@@ -28,7 +29,7 @@ public class LevelGenerator : MonoBehaviour
         {
             for(int j = 0; j < width; j++)
             {
-                Vector2 point = new Vector2(i - height / 2, j - height / 2);
+                Vector2 point = new Vector2(i - height / 2, j - height / 2 - 5);
 
                 if(point != Vector2.zero)
                     cells.Add(point);
@@ -89,6 +90,7 @@ public class LevelGenerator : MonoBehaviour
                     TileData td = containers[placedObj].GetComponent<TileData>();
                     td.hiddenObj = enemyCave;
                     td.type = "Enemy Tunnel";
+                    td.player = player;
                     placedObj++;
                 }
             }
@@ -132,6 +134,7 @@ public class LevelGenerator : MonoBehaviour
                     TileData td = containers[placedObj].GetComponent<TileData>();
                     td.hiddenObj = relics[i];
                     td.type = "Relic";
+                    td.player = player;
 
                     placedObj++;
                 }

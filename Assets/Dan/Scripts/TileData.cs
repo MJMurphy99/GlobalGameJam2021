@@ -7,10 +7,12 @@ public class TileData : MonoBehaviour
     public GameObject hiddenObj;
     public string type;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()
     {
-        print(1);
-        Instantiate(hiddenObj, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (Physics2D.OverlapCircle(transform.position, .3f) != null)
+        {
+            Instantiate(hiddenObj, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

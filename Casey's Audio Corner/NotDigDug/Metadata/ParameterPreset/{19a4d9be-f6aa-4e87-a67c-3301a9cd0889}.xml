@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="ParameterPreset" id="{19a4d9be-f6aa-4e87-a67c-3301a9cd0889}">
+		<property name="name">
+			<value>Duck Out</value>
+		</property>
+		<relationship name="folder">
+			<destination>{f0c6335f-4140-45d8-b43a-81bb0a665121}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{1ee655b1-0ade-4386-9ee1-492e5e826e55}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{1ee655b1-0ade-4386-9ee1-492e5e826e55}">
+		<property name="parameterType">
+			<value>1</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

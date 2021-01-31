@@ -114,6 +114,8 @@ public class enemyMovement : MonoBehaviour
                         if(goalTag.Equals("Tree"))
                         {
                             gameObject.GetComponent<DuckManager>().PackageSecured();
+                            //score increase
+                            Destroy(gameObject);
                         }
                         else if(!isMoving)
                         {

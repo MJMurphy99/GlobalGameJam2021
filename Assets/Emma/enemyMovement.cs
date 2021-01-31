@@ -44,7 +44,6 @@ public class enemyMovement : MonoBehaviour
         pathRecord = new char[1 + xMax - xMin, 1 + yMax - yMin];//the one plus is to account for tiles at 0,0
 
         StartPathfinding();
-        printPath();
     }
 
     // Update is called once per frame
@@ -87,7 +86,7 @@ public class enemyMovement : MonoBehaviour
                         {
                             gameObject.GetComponent<DuckManager>().PackageSecured();
                         }
-                        else
+                        else if(!isMoving)
                         {
                             gameObject.GetComponent<DuckManager>().CheckForObject();
                         }
@@ -191,7 +190,6 @@ public class enemyMovement : MonoBehaviour
             curr+turns[2],
             curr+turns[3]
         };
-        Debug.Log(adj[0] + ", " + curr);
         return adj;
     }
 

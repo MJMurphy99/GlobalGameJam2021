@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Tilemaps;
 
 public class DuckManager : MonoBehaviour
 {
@@ -38,6 +39,23 @@ public class DuckManager : MonoBehaviour
     public void CheckForObject()
     {
         Destroy(GameObject.FindGameObjectWithTag("Flag"));
+
+        Collider2D duckCol = GetComponent<Collider2D>();
+        GameObject[] nuts = GameObject.FindGameObjectsWithTag("Mineable");
+
+        for(int i=0; i<nuts.Length; i++)
+        {
+            
+            Collider2D nutCol = nuts[i].GetComponent<Collider2D>();
+            if (nutCol!=null && nutCol.IsTouching(duckCol))
+            {
+                Debug.Log(3);
+                mineable = true;
+                mineableObject = nuts[i];
+                break;
+            }
+        }
+
         if(mineable)
         {
             if(!isMining)
@@ -54,6 +72,7 @@ public class DuckManager : MonoBehaviour
     IEnumerator Mine()
     {
         isMining = true;
+        startEnemies();
         gameObject.GetComponent<Animator>().SetBool("Arrive", true);
         GameObject bar = Instantiate(canvasPrefab).transform.GetChild(0).gameObject;
         elapsedTime = 0f;
@@ -78,23 +97,10 @@ public class DuckManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Mineable"))
+        if(collision.gameObject.CompareTag("Enemy"))
         {
-            mineable = true;
-            mineableObject = collision.gameObject;
-        }
-        else if(collision.gameObject.CompareTag("Enemy"))
-        {
+            Destroy(collision.gameObject);
             Explode();
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Mineable"))
-        {
-            mineable = false;
-            mineableObject = null;
         }
     }
 

@@ -6,9 +6,7 @@ using UnityEngine;
 public class SonarController : MonoBehaviour
 {
     public static event Action Blip = delegate { };
-    private float coolDown = 30f;
     private bool cooling = false;
-    float elapsedTime = 1f;
     // Update is called once per frame
     void Update()
     {
@@ -22,7 +20,6 @@ public class SonarController : MonoBehaviour
 
     IEnumerator Sonar()
     {
-        elapsedTime = 0f;
         cooling = true;
         Blip();
         yield return new WaitForSeconds(.5f);

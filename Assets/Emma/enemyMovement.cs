@@ -2,66 +2,89 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-[System.Serializable]
 
 public class enemyMovement : MonoBehaviour
 {
     public int xMin, xMax, yMin, yMax;
     private char[,] pathRecord;
-    
 
-    public Tilemap tm;
+
+    public string tilemapTag;
+    private Tilemap tm;
+
+    public string goalTag;
+    private Transform goalTransform;
+    public Vector3Int goalTilemapPos;
     Vector2Int goal;
-    private Transform duck;
 
-
-    bool move;
-    bool isMoving = false;
-    Vector3 origPos, targetPos;
-    float moveTime = 0.4f;
-    Vector2Int pathPoint;
+    private bool move;
+    private bool entry;
+    private bool isMoving = false;
+    private Vector3 origPos, targetPos;
+    private float moveTime = 0.4f;
+    private Vector2Int pathPoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        pathRecord = new char[xMax - xMin, yMax - yMin];
-        findPath();
+        tm = GameObject.FindGameObjectWithTag(tilemapTag).GetComponent<Tilemap>();
 
-
-        duck = GameObject.FindGameObjectWithTag("duck").transform;
-        goal = new Vector2Int(xMax, yMax) - (Vector2Int)tm.WorldToCell(duck.position);
 
         Vector3Int location = tm.WorldToCell(transform.position);
         transform.position = tm.CellToWorld(location);
         pathPoint = new Vector2Int(xMax, yMax) - (Vector2Int)location;
 
+        GetComponent<SpriteRenderer>().enabled = true;
+
+        entry = false;
+        pathRecord = new char[xMax - xMin, yMax - yMin];
+        findPath();
+
+        if(!goalTag.Equals(""))
+        {
+            goalTransform = GameObject.FindGameObjectWithTag(goalTag).transform;
+            goalTilemapPos = tm.WorldToCell(goalTransform.position);
+        }
+        
+        goal = new Vector2Int(xMax, yMax) - (Vector2Int)goalTilemapPos;
 
         move = findGoal(pathPoint);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (move && !isMoving && !tm.WorldToCell(duck.position).Equals(tm.WorldToCell(transform.position)))
+        if(entry)
         {
-            pathRecord[pathPoint.x, pathPoint.y] = 'Z';
-            Vector3Int direction = Vector3Int.zero;
-            Vector2Int[] adj = adjacentPoints(pathPoint);
-            
-            for (int i = 0; i < 4; i++)
+            if (move && !MovementManager.duckDeadorSuccessful)
             {
-                if (validPoint(adj[i]))
+                if (!goalTilemapPos.Equals(tm.WorldToCell(transform.position)) && !isMoving)
                 {
-                    if (pathRecord[adj[i].x, adj[i].y] == 'P')
+                    pathRecord[pathPoint.x, pathPoint.y] = 'Z';
+                    Vector3Int direction = Vector3Int.zero;
+                    Vector2Int[] adj = adjacentPoints(pathPoint);
+
+                    for (int i = 0; i < 4; i++)
                     {
-                        direction = (Vector3Int)(pathPoint - adj[i]);
-                        pathPoint = adj[i];
-                        break;
+                        if (validPoint(adj[i]))
+                        {
+                            if (pathRecord[adj[i].x, adj[i].y] == 'P')
+                            {
+                                direction = (Vector3Int)(pathPoint - adj[i]);
+                                //this direction variable is always either Up(0,1,0) Down(0,-1,0) Left(-1,0,0) or Right(1,0,0)
+                                pathPoint = adj[i];
+                                break;
+                            }
+                        }
                     }
+                    StartCoroutine(moveEnemy(direction));
                 }
             }
-            StartCoroutine (moveEnemy(direction));
+            else
+            {
+                Destroy(gameObject.GetComponent<enemyMovement>());
+                gameObject.GetComponent<Animator>().SetTrigger("Exit");
+            }
         }
         
     }
@@ -74,10 +97,8 @@ public class enemyMovement : MonoBehaviour
 
         origPos = transform.position;
 
-        
-        
-
         targetPos = tm.CellToWorld(tm.WorldToCell(origPos) + direction);
+
 
         while(elapsedTime < moveTime)
         {
@@ -170,5 +191,10 @@ public class enemyMovement : MonoBehaviour
             pr += "\n";
         }
         Debug.Log(pr);
+    }
+
+    public void readyToMove()
+    {
+        entry = true;
     }
 }

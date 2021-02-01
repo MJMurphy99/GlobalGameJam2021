@@ -45,6 +45,8 @@ public class GridMovement : MonoBehaviour
 
         anim = GetComponent<Animator>();
         cDurr = mDurr;
+
+        ScoreKeeper.playerScoreNum = 0;
     }
 
     // Update is called once per frame
@@ -210,10 +212,10 @@ public class GridMovement : MonoBehaviour
 
         //baseline of how score can work, when you collide with it add to the score
         //easy to adapt, this is just baseline system that is super easy to alter
-        if (collision.gameObject.tag == "Ore")
+        if (collision.gameObject.tag == "Mineable")
         {
             ScoreKeeper.playerScoreNum++;
-            LevelCompletionCheck.numOreRemaining--;
+            //LevelCompletionCheck.numOreRemaining--;
         }
     }
 

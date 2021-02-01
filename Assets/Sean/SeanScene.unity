@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5957,7 +5957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6187,7 +6187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aba94ca8e3ff5645a5d699de3649add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttack: {fileID: 1818301566744028158, guid: 16695125b08c37144b66208529f981d2,
+  playerAttack: {fileID: 2858486589649476689, guid: ac7bc163ae61288459f48a6c1bb93758,
     type: 3}
   attackSpawnHor: {fileID: 175510631}
   attackSpawnUp: {fileID: 650453749}

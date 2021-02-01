@@ -32,6 +32,7 @@ public class DuckManager : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<SpawnDuck>().cd();
         duckDeadorSuccessful = true;
+        ScoreKeeper.playerScoreNum++;
     }
 
     public void ReturnToTree()

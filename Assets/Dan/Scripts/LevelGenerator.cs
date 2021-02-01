@@ -13,6 +13,9 @@ public class LevelGenerator : MonoBehaviour
     public int minCaves;
     public int proximityExclusionRadius;
 
+    public static GameObject[] randoSpawns;
+    public static int randoCount = 0;
+
     private GameObject[] containers;
     private List<Vector2> cells;
     private int placedObj = 0;
@@ -56,6 +59,7 @@ public class LevelGenerator : MonoBehaviour
         int numCaves = Random.Range(minCaves, maxCaves + 1);
 
         containers = new GameObject[numCaves + 3];
+        randoSpawns = new GameObject[numCaves + 3];
 
         for(int i = 0; i < numCaves; i++)
         {
@@ -153,8 +157,12 @@ public class LevelGenerator : MonoBehaviour
             for (int i = 0; i < containers.Length; i++)
             {
                 Destroy(containers[i]);
+                Destroy(randoSpawns[i]);
             }
             placedObj = 0;
+            randoCount = 0;
+            tm.ClearAllTiles();
+
         }
     }
 

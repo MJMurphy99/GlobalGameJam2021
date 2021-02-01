@@ -12,7 +12,8 @@ public class TileData : MonoBehaviour
     {
         if (Physics2D.OverlapCircle(transform.position, .3f) == player)
         {
-            Instantiate(hiddenObj, transform.position, Quaternion.identity);
+            int n = LevelGenerator.randoCount = LevelGenerator.randoCount + 1;
+            LevelGenerator.randoSpawns[n] = Instantiate(hiddenObj, transform.position, Quaternion.identity);
             gameObject.GetComponent<Sonar>().stopRing();
             Destroy(gameObject);
         }

@@ -23,6 +23,7 @@ public class SpawnDuck : MonoBehaviour
     {
         if (canSpawnDuck && Input.GetKeyDown(KeyCode.Q))
         {
+            DuckManager.duckDeadorSuccessful = false;
             anim.SetTrigger("Duck");
             Instantiate(flag, transform.position, transform.rotation);
             canSpawnDuck = false;

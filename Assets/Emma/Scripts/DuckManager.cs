@@ -70,6 +70,11 @@ public class DuckManager : MonoBehaviour
         {
             if(!isMining)
             {
+                if(mineableObject!=null)
+                {
+                    Destroy(mineableObject);
+                }
+                
                 StartCoroutine(Mine());
             }
         }

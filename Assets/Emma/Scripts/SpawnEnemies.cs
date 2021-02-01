@@ -17,22 +17,19 @@ public class SpawnEnemies : MonoBehaviour
         
     }
 
-    void Spawn()
+    void Spawn(GameObject target)
     {
-        if(gameObject.GetComponent<SpriteRenderer>().enabled==true)
-        {
-            int max = Random.Range(1,3);
-            StartCoroutine(spaceOutSpawn(max));
-        }
+        int max = Random.Range(1,3);
+        StartCoroutine(spaceOutSpawn(max, target));
     }
 
-    IEnumerator spaceOutSpawn(int max)
+    IEnumerator spaceOutSpawn(int max, GameObject target)
     {
         for (int i=0; i<max; i++)
         {
             GameObject a = Instantiate(enemy, transform.position, transform.rotation);
-            
-            yield return new WaitForSeconds(a.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+           // a.GetComponent<enemyMovement>().readyToMove();
+            yield return new WaitForSeconds(.01f);
         }
     }
 }

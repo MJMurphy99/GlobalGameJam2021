@@ -12,5 +12,12 @@ public class boiGoBoom : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
+        if (collision.gameObject.tag == "ore")
+        {
+            //trigger the item pickup animation
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+
+        }
     }
 }

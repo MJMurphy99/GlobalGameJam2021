@@ -11,18 +11,15 @@ public class Sonar : MonoBehaviour
         SonarController.Blip += SpawnRing;
     }
 
-    private void Update()
-    {
-        if(GetComponent<SpriteRenderer>().enabled)
-        {
-            SonarController.Blip -= SpawnRing;
-        }
-    }
-
     public void SpawnRing()
     {
         GameObject a = Instantiate(ringPrefab);
         a.transform.position = transform.position;
         a.GetComponent<Animator>().SetTrigger("Go");
+    }
+
+    public void stopRing()
+    {
+        SonarController.Blip -= SpawnRing;
     }
 }

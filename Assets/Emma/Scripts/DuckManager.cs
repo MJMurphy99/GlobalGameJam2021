@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class DuckManager : MonoBehaviour
 {
-    public static event Action startEnemies = delegate { };
+    public static event Action<GameObject> startEnemies = delegate { };
     public static bool duckDeadorSuccessful = false;
 
     bool mineable;
@@ -21,6 +21,8 @@ public class DuckManager : MonoBehaviour
 
     private Animator anim;
 
+    private GameObject bar;
+
     public void Start()
     {
         anim = GetComponent<Animator>();
@@ -28,7 +30,7 @@ public class DuckManager : MonoBehaviour
 
     public void PackageSecured()
     {
-        StartCoroutine(SpawnDuck.CoolDown());
+        GameObject.FindGameObjectWithTag("Player").GetComponent<SpawnDuck>().cd();
         duckDeadorSuccessful = true;
     }
 
@@ -54,11 +56,9 @@ public class DuckManager : MonoBehaviour
         {
             
             Collider2D nutCol = nuts[i].GetComponent<Collider2D>();
-            Debug.Log(nutCol);
-            Debug.Log(duckCol);
+
             if (nutCol.IsTouching(duckCol))
             {
-                Debug.Log(3);
                 mineable = true;
                 mineableObject = nuts[i];
                 break;
@@ -81,19 +81,24 @@ public class DuckManager : MonoBehaviour
     IEnumerator Mine()
     {
         isMining = true;
-        startEnemies();
         gameObject.GetComponent<Animator>().SetBool("Arrive", true);
-        GameObject bar = Instantiate(canvasPrefab).transform.GetChild(0).gameObject;
+        bar = Instantiate(canvasPrefab).transform.GetChild(0).gameObject;
         elapsedTime = 0f;
 
-        while(elapsedTime<mineTime)
+        startEnemies(gameObject);
+        while (elapsedTime<mineTime)
         {
             elapsedTime += Time.deltaTime;
-            bar.GetComponent<Slider>().value = elapsedTime / mineTime;
+            if(bar!=null)
+            {
+                bar.GetComponent<Slider>().value = elapsedTime / mineTime;
+            }
             yield return null;
         }
-
-        Destroy(bar.transform.parent.gameObject);
+        if(bar!=null)
+        {
+            Destroy(bar.transform.parent.gameObject);
+        }
         ReturnToTree();
 
         if(mineableObject!=null)
@@ -117,7 +122,20 @@ public class DuckManager : MonoBehaviour
     {
         PackageSecured();
 
+        if(bar!=null)
+        {
+            Destroy(bar);
+        }
         anim.SetTrigger("Death");
+    }
+
+    public void killAllEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i]);
+        }
     }
 
 }

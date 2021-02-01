@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SpawnDuck : MonoBehaviour
 {
-    public static bool canSpawnDuck = true;
+    private bool canSpawnDuck = true;
     public GameObject duck, flag;
-    private static float duckCoolDown = 10f;
+    private float duckCoolDown = 10f;
 
     private Animator anim;
 
@@ -40,9 +40,14 @@ public class SpawnDuck : MonoBehaviour
     //    Instantiate(duck);
     //}
 
-    public static IEnumerator CoolDown()
+    IEnumerator CoolDown()
     {
         yield return new WaitForSeconds(duckCoolDown);
         canSpawnDuck = true;
+    }
+
+    public void cd()
+    {
+        StartCoroutine(CoolDown());
     }
 }

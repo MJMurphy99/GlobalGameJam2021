@@ -16,7 +16,7 @@ public class enemyMovement : MonoBehaviour
     private Tilemap tm;
 
     public string goalTag;
-    private Transform goalTransform;
+    public Transform goalTransform;
     public Vector3Int goalTilemapPos;
     Vector2Int goal;
 
@@ -131,7 +131,9 @@ public class enemyMovement : MonoBehaviour
                 }
                 else if(gameObject.CompareTag("Enemy"))
                 {
-                    gameObject.GetComponent<Animator>().SetTrigger("Exit");
+                    printPath();
+                    Destroy(gameObject);
+                    //gameObject.GetComponent<Animator>().SetTrigger("Exit");
                 }
             }
             
@@ -173,8 +175,10 @@ public class enemyMovement : MonoBehaviour
 
         if (!goalTag.Equals(""))
         {
+            
             goalTransform = GameObject.FindGameObjectWithTag(goalTag).transform;
             goalTilemapPos = tm.WorldToCell(goalTransform.position);
+            Debug.Log(goalTransform.gameObject);
         }
 
         goal = new Vector2Int(xMax, yMax) - (Vector2Int)goalTilemapPos;

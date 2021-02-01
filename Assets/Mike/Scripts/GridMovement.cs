@@ -24,7 +24,7 @@ public class GridMovement : MonoBehaviour
 
     public float playerAttackCooldown;
 
-    public bool playerCanMove;
+    public static bool playerCanMove;
 
     public Tilemap tm;
     public TileBase t;
@@ -135,7 +135,15 @@ public class GridMovement : MonoBehaviour
             float elapsedTime = 0;
 
             originPos = transform.position;
-            targetPos = tm.CellToWorld(tm.WorldToCell(originPos) + direction);
+
+            Vector3Int targetCell = tm.WorldToCell(originPos) + direction;
+            if(targetCell.x>7|| targetCell.x < -8 || targetCell.y<-11 || targetCell.y>3)
+            {
+                isMoving = false;
+                yield break;
+            }
+            targetPos = tm.CellToWorld(targetCell);
+            
 
             while (elapsedTime < timeToMove)
             {

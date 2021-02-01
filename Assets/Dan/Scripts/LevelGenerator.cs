@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -16,8 +17,11 @@ public class LevelGenerator : MonoBehaviour
     private List<Vector2> cells;
     private int placedObj = 0;
 
+    private Tilemap tm;
+
     private void Start()
     {
+        tm = GameObject.FindGameObjectWithTag("Path").GetComponent<Tilemap>();
         CallNewLevel();
     }
 
@@ -85,8 +89,8 @@ public class LevelGenerator : MonoBehaviour
                 if (creatable)
                 {
                     cells.RemoveAt(cell);
-
-                    containers[placedObj] = Instantiate(container, point, Quaternion.identity);
+                    
+                    containers[placedObj] = Instantiate(container, tm.CellToWorld(tm.WorldToCell(point)), Quaternion.identity);
                     TileData td = containers[placedObj].GetComponent<TileData>();
                     td.hiddenObj = enemyCave;
                     td.type = "Enemy Tunnel";
@@ -130,7 +134,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     cells.RemoveAt(cell);
 
-                    containers[placedObj] = Instantiate(container, point, Quaternion.identity);
+                    containers[placedObj] = Instantiate(container, tm.CellToWorld(tm.WorldToCell(point)), Quaternion.identity);
                     TileData td = containers[placedObj].GetComponent<TileData>();
                     td.hiddenObj = relics[i];
                     td.type = "Relic";

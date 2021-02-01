@@ -13,6 +13,7 @@ public class TileData : MonoBehaviour
         if (Physics2D.OverlapCircle(transform.position, .3f) == player)
         {
             Instantiate(hiddenObj, transform.position, Quaternion.identity);
+            gameObject.GetComponent<Sonar>().stopRing();
             Destroy(gameObject);
         }
     }

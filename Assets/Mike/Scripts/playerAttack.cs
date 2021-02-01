@@ -52,6 +52,8 @@ public class playerAttack : MonoBehaviour
         }
         if (collision.gameObject.tag == "Enemy")
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Hit_Attack");
+
             //trigger the item pickup animation
             ScoreKeeper.playerScoreNum++;
             if (ScoreKeeper.playerScoreNum > ScoreKeeper.playerHighScoreNum)
@@ -60,6 +62,8 @@ public class playerAttack : MonoBehaviour
             }
             Destroy(collision.gameObject);
             Destroy(gameObject);
+
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Enemy_Death");
 
         }
     }

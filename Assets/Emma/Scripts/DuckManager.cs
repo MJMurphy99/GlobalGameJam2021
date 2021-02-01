@@ -23,9 +23,17 @@ public class DuckManager : MonoBehaviour
 
     private GameObject bar;
 
+    //private FMOD.Studio.EventInstance instance;
+
+    //[FMODUnity.EventRef]
+    //public string fmodEvent;
+
     public void Start()
     {
         anim = GetComponent<Animator>();
+
+        //instance = FMODUnity.RuntimeManager.CreateInstance(fmodEvent);
+        //instance.start();
     }
 
     public void PackageSecured()
@@ -119,6 +127,7 @@ public class DuckManager : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Duck_Quack");
             Destroy(collision.gameObject);
             Explode();
         }
@@ -126,6 +135,9 @@ public class DuckManager : MonoBehaviour
 
     public void Explode()
     {
+        //instance.setParameterByName("Duck Out", 0);
+        SpawnDuck.DuckOut = false;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Explode");
         PackageSecured();
 
         if(bar!=null)

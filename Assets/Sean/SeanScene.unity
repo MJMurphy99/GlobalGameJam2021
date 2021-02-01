@@ -478,10 +478,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 512, y: 512}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1538,6 +1538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639616892380622438, guid: 2ec984448e4ab4c6cae12d344d73f35d,
+        type: 3}
+      propertyPath: fmodEvent
+      value: event:/Music/Level_Music
       objectReference: {fileID: 0}
     - target: {fileID: 4609368098561585938, guid: 2ec984448e4ab4c6cae12d344d73f35d,
         type: 3}
@@ -6199,6 +6204,7 @@ MonoBehaviour:
   tm: {fileID: 1227462983}
   t: {fileID: 11400000, guid: 03ff32c8b2aaf80478a9b6aa24736f88, type: 2}
   mDurr: 0
+  fmodEvent: event:/Music/Level_Music
 --- !u!61 &2031058051
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6260,6 +6266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duck: {fileID: 2358670142369674767, guid: 2ec984448e4ab4c6cae12d344d73f35d, type: 3}
   flag: {fileID: 7820072654689032930, guid: 32482f71aa46e406b99326adc92bd918, type: 3}
+  fmodEvent: event:/Music/Level_Music
 --- !u!114 &2031058054
 MonoBehaviour:
   m_ObjectHideFlags: 0

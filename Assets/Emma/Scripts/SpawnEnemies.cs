@@ -25,6 +25,8 @@ public class SpawnEnemies : MonoBehaviour
 
     IEnumerator spaceOutSpawn(int max, GameObject target)
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Enemy_Active");
+
         for (int i=0; i<max; i++)
         {
             GameObject a = Instantiate(enemy, transform.position, transform.rotation);

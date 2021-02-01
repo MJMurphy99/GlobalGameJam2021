@@ -20,7 +20,7 @@ public class SonarController : MonoBehaviour
         if (!cooling && Input.GetKeyDown(KeyCode.E))
         {
             //Ping();
-            
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Sonar");
             StartCoroutine(Sonar());
         }
     }

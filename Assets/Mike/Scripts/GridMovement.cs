@@ -34,6 +34,12 @@ public class GridMovement : MonoBehaviour
 
     private Animator anim;
 
+    public static bool canMove = true;
+
+    private FMOD.Studio.EventInstance instance;
+    [FMODUnity.EventRef]
+    public string fmodEvent;
+
     private void Start()
     {
         transform.position = tm.CellToWorld(tm.WorldToCell(transform.position));
@@ -47,6 +53,9 @@ public class GridMovement : MonoBehaviour
         cDurr = mDurr;
 
         ScoreKeeper.playerScoreNum = 0;
+
+        instance = FMODUnity.RuntimeManager.CreateInstance(fmodEvent);
+        instance.start();
     }
 
     // Update is called once per frame
@@ -54,7 +63,7 @@ public class GridMovement : MonoBehaviour
     {
         playerAttackCooldown -= Time.deltaTime;
 
-        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isMoving)
+        if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && !isMoving && canMove)
         {
             //Up
             anim.SetInteger("Direction", 1);
@@ -67,7 +76,7 @@ public class GridMovement : MonoBehaviour
             keyPressedLast = "up";
 
         }
-        else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !isMoving)
+        else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && !isMoving && canMove)
         {
             //Down
             anim.SetInteger("Direction", 0);
@@ -80,7 +89,7 @@ public class GridMovement : MonoBehaviour
             keyPressedLast = "down";
 
         }
-        else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isMoving)
+        else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && !isMoving && canMove)
         {
             //Left
             anim.SetInteger("Direction", 2);
@@ -95,7 +104,7 @@ public class GridMovement : MonoBehaviour
 
 
         }
-        else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isMoving)
+        else if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && !isMoving && canMove)
         {
             //Right
             anim.SetInteger("Direction", 2);
@@ -111,7 +120,7 @@ public class GridMovement : MonoBehaviour
 
         if (playerAttackCooldown <= 0)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && canMove)
             {
                 anim.SetTrigger("Throw");
 
@@ -162,6 +171,11 @@ public class GridMovement : MonoBehaviour
             {
                 tm.SetTile(pos, t);
                 cDurr--;
+                //instance.setParameterByName("Digging", 1);
+            }
+            else
+            {
+                //instance.setParameterByName("Digging", 0);
             }
 
             Debug.Log(transform.position);
@@ -180,20 +194,28 @@ public class GridMovement : MonoBehaviour
 
     public void Shoot()
     {
-        if(keyPressedLast == "up")
+        if(keyPressedLast == "up" && canMove)
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Throw");
+
             Instantiate(playerAttack, attackSpawnUp.transform.position, attackSpawnUp.transform.rotation);
         }
-        else if (keyPressedLast == "down")
+        else if (keyPressedLast == "down" && canMove)
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Throw");
+            //play sound
             Instantiate(playerAttack, attackSpawnDown.transform.position, attackSpawnDown.transform.rotation);
         }
-        else if (keyPressedLast == "right" || keyPressedLast == "left")
+        else if (keyPressedLast == "right" || keyPressedLast == "left" && canMove)
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Throw");
+            //play sound
             Instantiate(playerAttack, attackSpawnHor.transform.position, attackSpawnHor.transform.rotation);
         }
         else
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Throw");
+            //play sound
             Instantiate(playerAttack, attackSpawnHor.transform.position, attackSpawnHor.transform.rotation);
         }
 
@@ -204,10 +226,11 @@ public class GridMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            //anim
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Player_Death");
+            anim.SetTrigger("Death");
+            canMove = false;
             Destroy(collision.gameObject);
             StartCoroutine(PlayerDeath());
-            //play sound
         }
 
         //baseline of how score can work, when you collide with it add to the score
@@ -251,6 +274,7 @@ public class GridMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         //when the player collides with the enemy, lose one health and get set to a certain position in the world space
         transform.position = new Vector3(6.75f, 3.5f, 0);
+        canMove = true;
         playerHealth--;
         Debug.Log(playerHealth);
     }
